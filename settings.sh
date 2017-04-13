@@ -26,12 +26,16 @@
 # Author: Cihan Biyikoglu - github:(cihanb)
 
 ##rp settings
+#total number of nodes to set up
+rp_total_nodes=3
 #cluster name
 rp_fqdn="cluster.rp.local"
 #TODO: change this username
 rp_admin_account_name="cihan@redislabs.com"
 #TODO: change this password
 rp_admin_account_password="redislabs123"
+#docker network name for the cluster
+rp_network_name="redis_net"
 
 #misc settings
 #enable fast delete will supress confirmation on deletes of each VM. do this only if you are certain delete will not harm your existing VMs and you have tried the script multiple times.
