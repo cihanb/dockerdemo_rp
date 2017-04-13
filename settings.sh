@@ -26,12 +26,8 @@
 # Author: Cihan Biyikoglu - github:(cihanb)
 
 ##rp settings
-#total nodes in cluster
-rp_total_nodes=3
 #cluster name
 rp_fqdn="cluster.rp.local"
-#add a license file if one exists. free license will be used if none is specified.
-rp_license_file=""
 #TODO: change this username
 rp_admin_account_name="cihan@redislabs.com"
 #TODO: change this password
