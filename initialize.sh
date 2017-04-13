@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #read settings
-source ./my_settings.sh
+source ./settings.sh
 
 
 echo $warning_color"WARNING"$no_color": This will wipe out your cluster nodes and delete all your data on containers [y/n]"
@@ -34,19 +34,22 @@ then
     # #node1 - create cluster
     echo ""
     echo $info_color"INFO"$no_color": Initializing the cluster with node#1"
-    docker exec -d --privileged rp1 "/opt/redislabs/bin/rladmin" cluster create name $rp_fqdn username cihan@redislabs.com password redislabs123 flash_enabled
+    docker exec -d --privileged rp1 "/opt/redislabs/bin/rladmin" cluster create name $rp_fqdn username $rp_admin_account_name password $rp_admin_account_password flash_enabled
 
     # wait for cluster setup to finish
     sleep 10
     echo ""
     echo $info_color"INFO"$no_color": Joining node#2 to the cluster"
-    docker exec -d --privileged rp2 "/opt/redislabs/bin/rladmin" cluster join username cihan@redislabs.com password redislabs123 nodes 10.0.0.2 flash_enabled
+    docker exec -d --privileged rp2 "/opt/redislabs/bin/rladmin" cluster join username $rp_admin_account_name password $rp_admin_account_password nodes 10.0.0.2 flash_enabled
 
     # wait for cluster setup to finish
     sleep 10
     echo ""
     echo $info_color"INFO"$no_color": Joining node#3 to the cluster"
-    docker exec -d --privileged rp3 "/opt/redislabs/bin/rladmin" cluster join username cihan@redislabs.com password redislabs123 nodes 10.0.0.2 flash_enabled
+    docker exec -d --privileged rp3 "/opt/redislabs/bin/rladmin" cluster join username $rp_admin_account_name password $rp_admin_account_password nodes 10.0.0.2 flash_enabled
+
+    echo ""
+    echo $info_color"INFO"$no_color": Visit: https://localhost:8443 and Create a Database."
 
 else
     echo $info_color"INFO"$no_color": Cleanup Cancelled"
