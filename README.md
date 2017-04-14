@@ -10,7 +10,7 @@ Simple automated cluster deployment for a Redis Enterprise Pack (Redis<sup>e</su
 - Modify ```settings.sh``` to change default cluster settings
   - FQDN (full qualified domain name) ```rp_fqdn```, 
   - Cluster admin account and password ```rp_admin_account_name``` and ```rp_admin_account_password```
-- Run ```initialize.sh``` to set up a cluster
+- Run ```create_cluster.sh``` to set up a cluster
 - Create a Redis database by visiting ```https://locahost:8443``` 
 - Connect to your database using ```redis-cli``` 
 ```
@@ -23,3 +23,4 @@ OK
 127.0.0.1:16653> get key1
 “123”
 ```
+Note: Use ```delete_cluster.sh``` to cleanup the sample.
