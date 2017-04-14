@@ -51,4 +51,4 @@ docker ps -a | grep $rp_container_name_prefix
 echo ""
 echo $info_color"INFO"$no_color": NEXT STEPS:"
 echo $info_color"INFO"$no_color": Visit: https://localhost:8443 and create a database."
-echo $info_color"INFO"$no_color": Run: docker exec -it $rp_container_name_prefix1 bash to connect to first node."
+echo $info_color"INFO"$no_color": Run: docker exec -it "$rp_container_name_prefix"1 bash to connect to first node."
