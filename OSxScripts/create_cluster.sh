@@ -20,32 +20,36 @@ do
         rp_admin_ui_port=8443
         
         echo ""
-        echo $info_color"INFO"$no_color": Initializing the cluster with node#"$i
-        docker run -d --cap-add sys_resource --network $rp_network_name --name rp$i -p $rp_admin_ui_port:8443 redislabs/redis:latest
+        echo $info_color"INFO"$no_color": Starting container for node#"$i
+        docker run -d --cpus 2 -m 4GB --cap-add sys_resource --network $rp_network_name --name $rp_container_name_prefix$i -p $rp_admin_ui_port:8443 redislabs/redis:latest
 
         #wait for the container to launch and redis enterprise to start
         echo $info_color"INFO"$no_color": Waiting for containers to launch and services to start"
         sleep 30 
 
         echo $info_color"INFO"$no_color": Initializing the cluster with node#"$i
-        docker exec -d --privileged rp$i "/opt/redislabs/bin/rladmin" cluster create name $rp_fqdn username $rp_admin_account_name password $rp_admin_account_password flash_enabled
+        docker exec -d --privileged $rp_container_name_prefix$i "/opt/redislabs/bin/rladmin" cluster create name $rp_fqdn username $rp_admin_account_name password $rp_admin_account_password flash_enabled
     else
         #added nodes
         rp_admin_ui_port=$(( 8443+$i-1 ))
 
         echo ""
-        echo $info_color"INFO"$no_color": Initializing the cluster with node#"$i
-        docker run -d --cap-add sys_resource --network $rp_network_name --name rp$i -p $rp_admin_ui_port:8443 redislabs/redis:latest
+        echo $info_color"INFO"$no_color": Starting container for node#"$i
+        docker run -d  --cpus 2 -m 4GB --cap-add sys_resource --network $rp_network_name --name $rp_container_name_prefix$i -p $rp_admin_ui_port:8443 redislabs/redis:latest
 
         
         # wait for cluster setup to finish
         sleep 30
         echo $info_color"INFO"$no_color": Joining node#"$i" to the cluster"
-        docker exec -d --privileged rp$i "/opt/redislabs/bin/rladmin" cluster join username $rp_admin_account_name password $rp_admin_account_password nodes 10.0.0.2 flash_enabled
+        docker exec -d --privileged $rp_container_name_prefix$i "/opt/redislabs/bin/rladmin" cluster join username $rp_admin_account_name password $rp_admin_account_password nodes 10.0.0.2 flash_enabled
     fi
  done
 
 echo ""
 echo $info_color"INFO"$no_color": "$rp_total_nodes" node Redis Enterprise Pack cluster created."
+echo $info_color"INFO"$no_color": running container status:"
+docker ps -a | grep $rp_container_name_prefix
+echo ""
+echo $info_color"INFO"$no_color": NEXT STEPS:"
 echo $info_color"INFO"$no_color": Visit: https://localhost:8443 and create a database."
-echo $info_color"INFO"$no_color": Run: docker exec -it rp1 bash to connect to first node."
+echo $info_color"INFO"$no_color": Run: docker exec -it $rp_container_name_prefix1 bash to connect to first node."

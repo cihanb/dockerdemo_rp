@@ -28,6 +28,8 @@
 ##rp settings
 #total number of nodes to set up
 rp_total_nodes=3
+#container ame prefix - each node get a number added based on nodecount
+rp_container_name_prefix="rp"
 #cluster name
 rp_fqdn="cluster.rp.local"
 #TODO: change this username
