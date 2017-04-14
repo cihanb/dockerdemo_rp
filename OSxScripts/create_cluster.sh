@@ -16,12 +16,10 @@ for ((i = 1; i<=$rp_total_nodes; i++))
 do
     if [ $i -eq 1 ]
     then 
-        #start admin ports from 8443 and +1 per node
-        rp_admin_ui_port=8443
         
         echo ""
         echo $info_color"INFO"$no_color": Starting container for node#"$i
-        docker run -d --cpus 2 -m 4GB --cap-add sys_resource --network $rp_network_name --name $rp_container_name_prefix$i -p $rp_admin_ui_port:8443 redislabs/redis:latest
+        docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource --network $rp_network_name --name $rp_container_name_prefix$i -p $rp_admin_ui_port:$rp_admin_ui_port -p $rp_admin_restapi_port:$rp_admin_restapi_port redislabs/redis:latest
 
         #wait for the container to launch and redis enterprise to start
         echo $info_color"INFO"$no_color": Waiting for containers to launch and services to start"
@@ -31,11 +29,12 @@ do
         docker exec -d --privileged $rp_container_name_prefix$i "/opt/redislabs/bin/rladmin" cluster create name $rp_fqdn username $rp_admin_account_name password $rp_admin_account_password flash_enabled
     else
         #added nodes
-        rp_admin_ui_port=$(( 8443+$i-1 ))
+        rp_admin_ui_port_mapped=$(( $rp_admin_ui_port+$i-1 ))
+        rp_admin_restapi_port_mapped=$(( $rp_admin_restapi_port+$i-1 ))
 
         echo ""
         echo $info_color"INFO"$no_color": Starting container for node#"$i
-        docker run -d  --cpus 2 -m 4GB --cap-add sys_resource --network $rp_network_name --name $rp_container_name_prefix$i -p $rp_admin_ui_port:8443 redislabs/redis:latest
+        docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource --network $rp_network_name --name $rp_container_name_prefix$i -p $rp_admin_ui_port_mapped:$rp_admin_ui_port -p $rp_admin_restapi_port_mapped:$rp_admin_restapi_port redislabs/redis:latest
 
         
         # wait for cluster setup to finish

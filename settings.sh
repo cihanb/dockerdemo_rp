@@ -30,6 +30,9 @@
 rp_total_nodes=3
 #container ame prefix - each node get a number added based on nodecount
 rp_container_name_prefix="rp"
+#container resources
+rp_container_ram="4GB"
+rp_container_cpus=2
 #cluster name
 rp_fqdn="cluster.rp.local"
 #TODO: change this username
@@ -38,6 +41,9 @@ rp_admin_account_name="cihan@redislabs.com"
 rp_admin_account_password="redislabs123"
 #docker network name for the cluster
 rp_network_name="redis_net"
+#start admin UI and rest API ports from 8443 and 9443 and +1 per node
+rp_admin_ui_port=8443
+rp_admin_restapi_port=9443
 
 #misc settings
 #enable fast delete will supress confirmation on deletes of each VM. do this only if you are certain delete will not harm your existing VMs and you have tried the script multiple times.
