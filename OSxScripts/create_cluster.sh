@@ -44,11 +44,14 @@ do
     fi
  done
 
+#create database
+curl -u "$rp_admin_account_name:$rp_admin_account_password" --request POST --url https://localhost:9443/v1/bdbs --request POST --url https://localhost:9443/v1/bdbs  --header 'content-type: application/json' --data '{"name":"sample_db","type":"redis","memory_size":1073741824}'
+
 echo ""
 echo $info_color"INFO"$no_color": "$rp_total_nodes" node Redis Enterprise Pack cluster created."
 echo $info_color"INFO"$no_color": running container status:"
 docker ps -a | grep $rp_container_name_prefix
 echo ""
 echo $info_color"INFO"$no_color": NEXT STEPS:"
-echo $info_color"INFO"$no_color": Visit: https://localhost:8443 and create a database."
-echo $info_color"INFO"$no_color": Run: docker exec -it "$rp_container_name_prefix"1 bash to connect to first node."
+echo $info_color"INFO"$no_color": Visit: https://localhost:8443 to view the database and stats."
+echo $info_color"INFO"$no_color": Run: docker exec -it "$rp_container_name_prefix"1 bash to connect to first node"
