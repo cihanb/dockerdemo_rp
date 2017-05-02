@@ -1,6 +1,8 @@
 # DEMO
 ## Step#1 - Run Redis App against Redis Container
-### 1.a Run Redis Containers
+Steps to get a running Redis app on Windows ported over to Redis Enterprise. 
+
+### 1.a Run Redis Open Source Container
 ```
 docker run --name redis-oss -d -p 6379:6379 redis
 ```
@@ -8,6 +10,8 @@ docker run --name redis-oss -d -p 6379:6379 redis
 ```
 python3 redis_driver.py -p 6379
 ```
+Matrix should fill your screen!
+![Image](https://raw.githubusercontent.com/cihanb/dockerdemo_rp/master/Demo%233%20Migrating%20Redis%20App%20on%20macOS/Media/app_output.jpeg)
 
 ## Step#2 - Run Redis App against Enterprise Pack Container
 ### 1.a Create a network
@@ -15,7 +19,7 @@ python3 redis_driver.py -p 6379
 docker network create --ip-range 10.0.0.0/16 --subnet=10.0.0.0/16 redis_net
 ```
 
-### 1.b Run Redis Containers
+### 1.b Run Redis Enterprise Containers
 ```
 docker run -d --cap-add sys_resource --network redis_net --name redis1 -p 8443:8443 -p 9443:9443 -p 12000:12000 redislabs/redis:latest
 docker run -d --cap-add sys_resource --network redis_net --name redis2 -p 8444:8443 -p 9444:9443 -p 12001:12000 redislabs/redis:latest

@@ -11,6 +11,8 @@ docker run --name redis-oss -d -p 6379:6379 redis
 ```
 python3 redis_driver.py -p 6379
 ```
+Matrix should fill your screen!
+![Image](https://raw.githubusercontent.com/cihanb/dockerdemo_rp/master/Demo%233%20Migrating%20Redis%20App%20on%20macOS/Media/app_output.jpeg)
 
 ## Step#2 - Run Redis App against Enterprise Pack Container
 ### 1.a Run Redis Enterprise Containers 
@@ -29,9 +31,8 @@ Make sure DB listens on port 12000
 ```
 python3 redis_driver.py -p 12000
 ```
-
 Matrix should fill your screen!
-![Image](https://raw.githubusercontent.com/cihanb/dockerdemo_rp/master/Demo%232%20Migrating%20Redis%20App%20on%20Windows/WinScripts/app_output.jpeg)
+![Image](https://raw.githubusercontent.com/cihanb/dockerdemo_rp/master/Demo%233%20Migrating%20Redis%20App%20on%20macOS/Media/app_output.jpeg)
 
 # Cleanup
 docker rm -f redis-oss
