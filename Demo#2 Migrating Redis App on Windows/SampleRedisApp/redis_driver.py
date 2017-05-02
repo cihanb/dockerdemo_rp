@@ -1,8 +1,14 @@
+#!/usr/local/bin/python
+# -*- coding: utf-8 -*-
+
+
 import sys
 import redis
 import random
+from colorama import init
 from termcolor import colored, cprint
 
+init()
 #read db port
 db_port=sys.argv[2]
 
@@ -11,7 +17,7 @@ color=['grey', 'green']
 attribs=['bold','dark']
 r = redis.StrictRedis(host="localhost", port=db_port, db=0)
 
-for i in range(1,10000000):
+for i in range(1,10000):
     r.set (i, random.randint(0,40))
     print (
         colored( char[int(r.get(i))] + " ", 
