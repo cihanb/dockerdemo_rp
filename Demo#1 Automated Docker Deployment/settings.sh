@@ -31,7 +31,7 @@ rp_total_nodes=3
 #container ame prefix - each node get a number added based on nodecount
 rp_container_name_prefix="rp"
 #container resources
-rp_container_ram="4GB"
+rp_container_ram="6GB"
 rp_container_cpus=2
 #cluster name
 rp_fqdn="cluster.rp.local"

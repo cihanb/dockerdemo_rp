@@ -1,0 +1,26 @@
+DEMO
+Step#1 - Run Redis App against Redis Container
+1.a Run Redis Containers
+    docker run --name redis1 -d -p 6379 redis
+1.b Run the sample Redis App
+    python redis_driver.py
+
+Step#2 - Run Redis App against Enterprise Pack Container
+1.a Create a network
+    docker network create --ip-range 10.0.0.0/16 --subnet=10.0.0.0/16 redis_net
+
+1.a Run Redis Containers
+    docker run -d --cap-add sys_resource --network redis_net --name redis1 -p 8443:8443 -p 9443:9443 redislabs/redis:latest
+    docker run -d --cap-add sys_resource --network redis_net --name redis2 -p 8444:8443 -p 9444:9443 redislabs/redis:latest
+    docker run -d --cap-add sys_resource --network redis_net --name redis3 -p 8445:8443 -p 9445:9443 redislabs/redis:latest
+
+1.b Create cluster
+    docker exec -d --privileged redis1 "/opt/redislabs/bin/rladmin" cluster create name cluster.local username cihan@redislabs.com password redislabs123 flash_enabled
+    docker exec -d --privileged redis2 "/opt/redislabs/bin/rladmin" cluster join username cihan@redislabs.com password redislabs123 nodes 10.0.0.2 flash_enabled
+    docker exec -d --privileged redis3 "/opt/redislabs/bin/rladmin" cluster join username cihan@redislabs.com password redislabs123 nodes 10.0.0.2 flash_enabled
+
+1.c Create database
+    curl -k -u "cihan@redislabs.com:redislabs123" --request POST --url "https://localhost:9443/v1/bdbs" --header 'content-type: application/json' --data '{"name":"sample-db","type":"redis","memory_size":1073741824,"port":12000}'
+
+1.b Run the sample Redis App
+    python redis_driver.py -p 12000
