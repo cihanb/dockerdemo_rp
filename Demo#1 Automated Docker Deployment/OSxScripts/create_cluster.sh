@@ -46,7 +46,7 @@ do
 
 #create database
 echo $info_color"INFO"$no_color": Creating database sample-db on port 12000"
-curl -k -u "$rp_admin_account_name:$rp_admin_account_password" --request POST --url https://localhost:9443/v1/bdbs --request POST --url https://localhost:9443/v1/bdbs  --header 'content-type: application/json' --data '{"name":"sample-db","type":"redis","memory_size":1073741824,"port":12000}'
+curl -k -u "$rp_admin_account_name:$rp_admin_account_password" --request POST --url "https://localhost:$rp_admin_restapi_port/v1/bdbs" --header 'content-type: application/json' --data '{"name":"sample-db","type":"redis","memory_size":1073741824,"port":12000}'
 
 echo ""
 echo $info_color"INFO"$no_color": "$rp_total_nodes" node Redis Enterprise Pack cluster created."
