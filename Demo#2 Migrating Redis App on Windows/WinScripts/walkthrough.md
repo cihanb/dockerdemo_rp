@@ -15,7 +15,6 @@ python3 redis_driver.py -p 6379
 ```
 docker run -d --cap-add sys_resource --network redis_net --name redis1 -p 8443:8443 -p 9443:9443 -p 12000:12000 redislabs/redis:latest
 ```
-
 ### 1.b Create cluster
 
 Walk through UI : https://localhost:8443
@@ -24,7 +23,7 @@ Walk through UI : https://localhost:8443
 
 Make sure DB listens on port 12000
 
-1.b Run the sample Redis App
+### 1.d Run the sample Redis App
 ```
 python3 redis_driver.py -p 12000
 ```
