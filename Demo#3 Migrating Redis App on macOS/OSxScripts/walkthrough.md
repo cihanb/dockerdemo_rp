@@ -40,7 +40,7 @@ python3 redis_driver.py -p 12000
 ```
 
 Matrix should fill your screen!
-![Image](https://raw.githubusercontent.com/cihanb/dockerdemo_rp/master/Demo%233%20Migrating%20Redis%20App%20on%20macOS/Media/app_output.jpg)
+![Image](https://raw.githubusercontent.com/cihanb/dockerdemo_rp/master/Demo%233%20Migrating%20Redis%20App%20on%20macOS/Media/app_output.jpeg)
 
 
 # Cleanup
