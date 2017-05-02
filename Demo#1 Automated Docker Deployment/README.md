@@ -16,12 +16,10 @@ Simple automated cluster deployment for a Redis Enterprise Pack (Redis<sup>e</su
 - Connect to your database using ```redis-cli``` 
 ```
 docker  exec -it <container name: default is rp1> bash
-```
-```
 sudo /opt/redislabs/bin/redis-cli -p 12000
 127.0.0.1:16653> set key1 123
 OK
 127.0.0.1:16653> get key1
 “123”
 ```
-Note: Use ```delete_cluster.sh``` to cleanup the sample.
+_Note: Use ```delete_cluster.sh``` to cleanup the sample._

@@ -14,7 +14,7 @@ python3 redis_driver.py -p 6379
 Matrix should fill your screen!
 ![Image](https://raw.githubusercontent.com/cihanb/dockerdemo_rp/master/Demo%233%20Migrating%20Redis%20App%20on%20macOS/Media/app_output.jpeg)
 
-## Step#2 - Run Redis App against Enterprise Pack Container
+## Step#2 - Run the same Redis App against Enterprise Pack Container
 ### 1.a Run Redis Enterprise Containers 
 ```
 docker run -d --cap-add sys_resource --network redis_net --name redis1 -p 8443:8443 -p 9443:9443 -p 12000:12000 redislabs/redis:latest
