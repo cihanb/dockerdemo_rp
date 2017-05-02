@@ -1,4 +1,6 @@
 # DEMO
+Steps to get a running Redis app on Windows ported over to Redis Enterprise. 
+
 ## Step#1 - Run Redis App against Redis Container
 ### 1.a Run Redis Containers
 ```
