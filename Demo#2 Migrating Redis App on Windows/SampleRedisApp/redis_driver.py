@@ -3,10 +3,13 @@ import redis
 import random
 from termcolor import colored, cprint
 
+#read db port
+db_port=sys.argv[2]
+
 char=[ 'ｱ', 'ｲ', 'ｳ', 'ｴ', 'ｵ', 'ｶ', 'ｷ', 'ｸ',  'ｹ', 'ｺ', 'ｻ', 'ｼ', 'ｽ',  'ｾ', 'ｿ',  'ﾀ', 'ﾁ', 'ﾂ', 'ﾃ',  'ﾄ', 'ﾅ', 'ﾆ', 'ﾇ',  'ﾈ', 'ﾉ', 'ﾊ',  'ﾋ', 'ﾌ', 'ﾍ',  'ﾎ', 'ﾏ', 'ﾐ', 'ﾑ', 'ﾒ', 'ﾓ', 'ﾔ', 'ﾕ', 'ﾖ', 'ﾗ', 'ﾘ', 'ﾙ','ﾚ', 'ﾛ', 'ﾜ', 'ﾝ']
 color=['grey', 'green']
 attribs=['bold','dark']
-r = redis.StrictRedis(host="localhost", port=6379, db=0)
+r = redis.StrictRedis(host="localhost", port=db_port, db=0)
 
 for i in range(1,10000000):
     r.set (i, random.randint(0,40))
