@@ -48,8 +48,10 @@ Matrix should fill your screen!
 
 
 # Cleanup
+```
 docker rm -f redis-oss
 docker rm -f redis1
 docker rm -f redis2
 docker rm -f redis3
 docker network remove redis_net
+```
