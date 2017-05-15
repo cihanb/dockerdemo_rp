@@ -1,6 +1,9 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
+# thanks for the inspiration to brettterpstra.com
+
+
 
 import sys
 import redis

@@ -45,6 +45,7 @@ rp_network_name="redis_net"
 rp_admin_ui_port=8443
 rp_admin_restapi_port=9443
 
+
 #misc settings
 #enable fast delete will supress confirmation on deletes of each VM. do this only if you are certain delete will not harm your existing VMs and you have tried the script multiple times.
 enable_fast_delete=0
