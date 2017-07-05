@@ -29,7 +29,7 @@ import random
 from termcolor import colored, cprint
 
 #read db port
-db_port=sys.argv[2]
+db_port=12000
 
 char=[ 'ｱ', 'ｲ', 'ｳ', 'ｴ', 'ｵ', 'ｶ', 'ｷ', 'ｸ',  'ｹ', 'ｺ', 'ｻ', 'ｼ', 'ｽ',  
     'ｾ', 'ｿ',  'ﾀ', 'ﾁ', 'ﾂ', 'ﾃ',  'ﾄ', 'ﾅ', 'ﾆ', 'ﾇ',  'ﾈ', 'ﾉ', 'ﾊ',  
@@ -39,7 +39,7 @@ color=['grey', 'green']
 attribs=['bold','dark']
 r = redis.StrictRedis(host="localhost", port=db_port, db=0)
 
-for i in range(1,10000):
+for i in range(1,1000000):
     r.set (i, random.randint(0,40))
     print (
         colored( char[int(r.get(i))] + " ", 
