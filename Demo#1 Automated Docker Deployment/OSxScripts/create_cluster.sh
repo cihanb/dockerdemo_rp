@@ -44,7 +44,7 @@ do
         
         echo ""
         echo $info_color"INFO"$no_color": Starting container for node#"$i
-        docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource --network $rp_network_name --name $rp_container_name_prefix$i -p $rp_admin_ui_port:$rp_admin_ui_port -p $rp_admin_restapi_port:$rp_admin_restapi_port -p $rp_database_post:$rp_database_post redislabs/redis:4.5.0-22
+        docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource --network $rp_network_name --name $rp_container_name_prefix$i -p $rp_admin_ui_port:$rp_admin_ui_port -p $rp_admin_restapi_port:$rp_admin_restapi_port -p $rp_database_post:$rp_database_post $rp_container_tag
 
         #wait for the container to launch and redis enterprise to start
         echo $info_color"INFO"$no_color": Waiting for containers to launch and services to start"
@@ -59,7 +59,7 @@ do
 
         echo ""
         echo $info_color"INFO"$no_color": Starting container for node#"$i
-        docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource --network $rp_network_name --name $rp_container_name_prefix$i -p $rp_admin_ui_port_mapped:$rp_admin_ui_port -p $rp_admin_restapi_port_mapped:$rp_admin_restapi_port redislabs/redis:4.5.0-22
+        docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource --network $rp_network_name --name $rp_container_name_prefix$i -p $rp_admin_ui_port_mapped:$rp_admin_ui_port -p $rp_admin_restapi_port_mapped:$rp_admin_restapi_port $rp_container_tag
 
         
         # wait for cluster setup to finish
