@@ -28,29 +28,12 @@
 #read settings
 source ../settings.sh
 
+#create
+echo ""
+echo $info_color"INFO"$no_color": Starting Load Generation Image with Memtier Benchmark Tool"
 
-echo $warning_color"WARNING"$no_color": This will wipe out your cluster nodes and delete all your data on containers [y/n]"
-read yes_no
+#remove previous images
+docker rm -f loadgen_memtier
 
-if [ $yes_no == 'y' ]
-then
-    #remove
-    echo $info_color"INFO"$no_color": Running cleanup..."
-
-    i=0
-    for ((i = 1; i<=$rp_total_nodes; i++))
-    do
-        echo $info_color"INFO"$no_color": Deleting containers rp"$i
-        docker rm -f rp$i 
-    done
-
-    echo $info_color"INFO"$no_color": Deleting containers for loadgen"$i
-    docker rm -f loadgen_memtier
-
-    echo $info_color"INFO"$no_color": Deleting network "$rp_network_name
-    docker network rm $rp_network_name    
-else
-    echo $info_color"INFO"$no_color": Cleanup Cancelled"
-fi
-
-echo $info_color"INFO"$no_color": Done with cleanup."
+#run load gen - there are 2 profiles, 1 to load data and other to generate read/write workload
+docker run --env-file loadgen_memtier_settings.list -d --network $rp_network_name --name loadgen_memtier redislabs/memtier_benchmark

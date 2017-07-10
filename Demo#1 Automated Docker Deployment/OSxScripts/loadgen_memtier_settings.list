@@ -1,0 +1,7 @@
+REDIS_SERVER=10.0.0.2
+REDIS_PORT=12000
+MEMTIER_ARGS=
+# data load profile
+# MEMTIER_ARGS=--pipeline=100 -n allkeys --ratio=1:0 --data-size=1024 --key-prefix A --key-minimum=1 --key-pattern P:P --key-maximum=3000000 -c 4 -t 4
+# workload profile
+# MEMTIER_ARGS=--pipeline=10 -n allkeys --ratio=2:8 --data-size=1024 --key-prefix A --key-minimum=1000000 --key-pattern G:G --key-maximum=2000000 --key-stddev=180000 --distinct-client-seed --randomize -c 2 -t 2 -x 10
