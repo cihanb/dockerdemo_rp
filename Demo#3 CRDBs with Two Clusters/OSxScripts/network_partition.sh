@@ -22,32 +22,28 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-# Author: Cihan Biyikoglu - github:(cihanb)
-
+# Author: Cihan Biyikoglu - github:(cihanb) with contributions from Jake Angerman
 
 #read settings
 source ../settings.sh
 
 
-echo "WARNING: This will wipe out your cluster nodes and delete all your data on containers [y/n]"
-read yes_no
+echo ""
+echo $info_color"INFO"$no_color": Starting Network Split Between Two Cluster with a CRDB"
 
-if [ $yes_no == 'y' ]
-then
-    #remove
-    echo "INFO: Running cleanup..."
+#for each node in cluster1 add IPtable blocking rules to each node of cluster2 nodes
+i=0
+for ((i = 1; i<=$rp1_total_nodes; i++))
+do
+    cmd="docker exec -it $rp1_container_name_prefix$i ifconfig | grep 10.0.0. | cut -d\":\" -f 2 | cut -d\" \" -f 1"
+    rp1_node_ip=$(eval $cmd)
 
-    i=0
-    for ((i = 1; i<=$rp_total_nodes; i++))
+    j=0
+    for ((j = 1; j<=$rp2_total_nodes; j++))
     do
-        echo "INFO: Deleting containers rp"$i
-        docker rm -f rp$i 
+        docker exec --privileged $rp2_container_name_prefix$j iptables -A INPUT --source $rp1_node_ip -j DROP
+        docker exec --privileged $rp2_container_name_prefix$j iptables -A OUTPUT --dst   $rp1_node_ip -j DROP
+
     done
+done
 
-    echo "INFO: Deleting network "$rp_network_name
-    docker network rm $rp_network_name    
-else
-    echo "INFO: Cleanup Cancelled"
-fi
-
-echo "INFO: Done with cleanup."

@@ -26,16 +26,19 @@
 # Author: Cihan Biyikoglu - github:(cihanb)
 
 ##rp settings
-rp_container_tag="redislabs/redis:latest"
+rp_container_tag="redislabs/redis-internal:5.0.0-12.xenial"
 #total number of nodes to set up
-rp_total_nodes=3
+rp1_total_nodes=3
+rp2_total_nodes=3
 #container ame prefix - each node get a number added based on nodecount
-rp_container_name_prefix="rp"
+rp1_container_name_prefix="rp1_"
+rp2_container_name_prefix="rp2_"
 #container resources
-rp_container_ram="6GB"
+rp_container_ram="8GB"
 rp_container_cpus=2
 #cluster name
-rp_fqdn="redis_net"
+rp1_fqdn="cluster1.local"
+rp2_fqdn="cluster2.local"
 #TODO: change this username
 rp_admin_account_name="cihan@redislabs.com"
 #TODO: change this password
@@ -45,7 +48,15 @@ rp_network_name="redis_net"
 #start admin UI and rest API ports from 8443 and 9443 and +1 per node
 rp_admin_ui_port=8443
 rp_admin_restapi_port=9443
-rp_database_post=12000
+rp_database_port=12000
+#mapping for ports for cluster1
+rp1_admin_ui_port=8443
+rp1_admin_restapi_port=9443
+rp1_database_port=12000
+# mapping for ports for cluster2
+rp2_admin_ui_port=8444
+rp2_admin_restapi_port=9444
+rp2_database_port=12001
 
 
 #misc settings
