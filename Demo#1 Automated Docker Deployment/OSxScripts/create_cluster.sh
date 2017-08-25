@@ -52,6 +52,9 @@ do
 
         echo $info_color"INFO"$no_color": Initializing the cluster with node#"$i
         docker exec -d --privileged $rp_container_name_prefix$i "/opt/redislabs/bin/rladmin" cluster create name $rp_fqdn username $rp_admin_account_name password $rp_admin_account_password flash_enabled
+
+        cmd="docker exec -it $rp_container_name_prefix$i ifconfig | grep 10.0.0. | cut -d\":\" -f 2 | cut -d\" \" -f 1"
+        rp_first_node_ip=$(eval $cmd)
     else
         #added nodes
         rp_admin_ui_port_mapped=$(( $rp_admin_ui_port+$i-1 ))
@@ -65,7 +68,7 @@ do
         # wait for cluster setup to finish
         sleep 30
         echo $info_color"INFO"$no_color": Joining node#"$i" to the cluster"
-        docker exec -d --privileged $rp_container_name_prefix$i "/opt/redislabs/bin/rladmin" cluster join username $rp_admin_account_name password $rp_admin_account_password nodes 10.0.0.2 flash_enabled
+        docker exec -d --privileged $rp_container_name_prefix$i "/opt/redislabs/bin/rladmin" cluster join username $rp_admin_account_name password $rp_admin_account_password nodes $rp_first_node_ip flash_enabled
     fi
  done
 

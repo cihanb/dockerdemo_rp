@@ -40,17 +40,17 @@ then
     i=0
     for ((i = 1; i<=$rp1_total_nodes; i++))
     do
-        echo $info_color"INFO"$no_color": Deleting containers rp"$i
+        echo $info_color"INFO"$no_color": Deleting container "$rp1_container_name_prefix$i
         docker rm -f $rp1_container_name_prefix$i 
     done
 
     for ((i = 1; i<=$rp2_total_nodes; i++))
     do
-        echo $info_color"INFO"$no_color": Deleting containers rp"$i
+        echo $info_color"INFO"$no_color": Deleting containers "$rp1_container_name_prefix$i
         docker rm -f $rp2_container_name_prefix$i 
     done
 
-    echo $info_color"INFO"$no_color": Deleting containers for loadgen"$i
+    echo $info_color"INFO"$no_color": Deleting container for loadgen"
     docker rm -f loadgen_memtier
 
     echo $info_color"INFO"$no_color": Deleting network "$rp_network_name
