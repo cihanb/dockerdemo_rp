@@ -26,7 +26,7 @@
 # Author: Cihan Biyikoglu - github:(cihanb)
 
 ##rp settings
-rp_container_tag="redislabs/redis-internal:5.0.0-12.xenial"
+rp_container_tag="redislabs/redis:latest"
 #total number of nodes to set up
 rp_total_nodes=3
 #container ame prefix - each node get a number added based on nodecount
@@ -35,7 +35,7 @@ rp_container_name_prefix="rp"
 rp_container_ram="6GB"
 rp_container_cpus=2
 #cluster name
-rp_fqdn="cluster1.local"
+rp_fqdn="redis_net"
 #TODO: change this username
 rp_admin_account_name="cihan@redislabs.com"
 #TODO: change this password
