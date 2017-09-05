@@ -44,7 +44,7 @@ do
         
         echo ""
         echo $info_color"INFO"$no_color": Starting container for node#"$i
-        docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource -h $rp1_container_name_prefix$i --network $rp_network_name --name $rp1_container_name_prefix$i -p $rp1_admin_ui_port:$rp_admin_ui_port -p $rp1_admin_restapi_port:$rp_admin_restapi_port -p $rp1_database_port:$rp_database_port $rp_container_tag
+        docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource -h $rp1_container_name_prefix$i --network $rp_network_name --name $rp1_container_name_prefix$i -p $rp1_admin_ui_port:$rp_admin_ui_port -p $rp1_admin_restapi_port:$rp_admin_restapi_port -p $rp1_database_port:$rp_database_port -p 8080:8080 $rp_container_tag
 
         #wait for the container to launch and redis enterprise to start
         echo $info_color"INFO"$no_color": Waiting for containers to launch and services to start"
@@ -114,8 +114,10 @@ do
 # sudo ./rladmin tune cluster default_shards_placement sparse
 
 #create database
-# echo $info_color"INFO"$no_color": Creating database sample-db on port 12000"
-# curl -k -u "$rp_admin_account_name:$rp_admin_account_password" --request POST --url "https://localhost:$rp_admin_restapi_port/v1/bdbs" --header 'content-type: application/json' --data '{"name":"sample-db","type":"redis","memory_size":1073741824,"port":12000}'
+echo ""
+echo $info_color"INFO"$no_color": Creating database sample-crdb on port 12000"
+json_dboptions='{"default_db_config": {"name": "sample-crdb", "bigstore": false, "data_persistence": "disabled", "replication": true, "memory_size": 1024000, "shards_count": 1, "port": 12000}, "instances": [{"cluster": {"url": "http://'$rp1_fqdn':8080", "credentials": {"username": "'$rp_admin_account_name'", "password": "'$rp_admin_account_password'"}, "name": "'$rp1_fqdn'"}, "compression": 6}, {"cluster": {"url": "http://'$rp2_fqdn':8080", "credentials": {"username": "'$rp_admin_account_name'", "password": "'$rp_admin_account_password'"}, "name": "'$rp2_fqdn'"}, "compression": 6}], "name": "sample-crdb"}'
+curl -k -u "$rp_admin_account_name:$rp_admin_account_password" --request POST --url "http://localhost:8080/v1/crdbs" --header 'content-type: application/json' --data "$json_dboptions"
 
 echo ""
 echo $info_color"INFO"$no_color": "$rp_total_nodes" node Redis Enterprise Pack clusters created."
