@@ -26,7 +26,7 @@
 # Author: Cihan Biyikoglu - github:(cihanb)
 
 ##rp settings
-rp_container_tag="redislabs/redis:5.0.0-12-preview"
+rp_container_tag="redislabs/redis:5.0.0-17-preview"
 #total number of nodes to set up
 rp1_total_nodes=3
 rp2_total_nodes=3
