@@ -1,6 +1,6 @@
-# Simple Deployment for Redis Enterprise Pack (Redis<sup>e</sup> Pack) on Docker 
+# Simple Deployment for Redis Enterprise Flash (Redis<sup>e</sup> Flash) on Docker 
 
-Simple automated cluster deployment for a Redis Enterprise Pack (Redis<sup>e</sup> Pack) deployment on Docker. Ideal for build up and teardown of test environments or functional tests. Works with Redis<sup>e</sup> Pack v4.4 or later. 
+Simple automated cluster deployment for a Redis Enterprise Pack (Redis<sup>e</sup> Pack) deployment on Docker. Redis Enterprise Flash configures uses Flash when RAM fills up in Redis. Ideal for build up and teardown of test environments or functional tests. Works with Redis<sup>e</sup> Pack v4.4 or later. 
 
 ## Requirements
 - Windows 10 with Docker v 17.03 or higher and to run the .sh files using "Git Bash", you need "[Git for Windows](https://git-for-windows.github.io/)".
