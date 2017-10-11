@@ -28,8 +28,8 @@
 ##rp settings
 rp_container_tag="redislabs/redis:5.0.0-17-preview"
 #total number of nodes to set up
-rp1_total_nodes=3
-rp2_total_nodes=3
+rp1_total_nodes=1
+rp2_total_nodes=1
 #container ame prefix - each node get a number added based on nodecount
 rp1_container_name_prefix="rp1_"
 rp2_container_name_prefix="rp2_"
