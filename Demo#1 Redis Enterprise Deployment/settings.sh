@@ -34,6 +34,8 @@ rp_container_name_prefix="rp"
 #container resources
 rp_container_ram="6GB"
 rp_container_cpus=2
+#license file
+rp_license_file="/Users/cihan/rp_license.txt"
 #cluster name
 rp_fqdn="redis_net"
 #TODO: change this username

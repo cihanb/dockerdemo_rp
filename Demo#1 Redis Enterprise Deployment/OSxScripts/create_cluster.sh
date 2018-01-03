@@ -50,11 +50,23 @@ do
         echo $info_color"INFO"$no_color": Waiting for containers to launch and services to start"
         sleep 30 
 
-        echo $info_color"INFO"$no_color": Initializing the cluster with node#"$i
-        docker exec -d --privileged $rp_container_name_prefix$i "/opt/redislabs/bin/rladmin" cluster create name $rp_fqdn username $rp_admin_account_name password $rp_admin_account_password flash_enabled
+        #add license
+		if [ $rp_license_file != "" ]
+		then
+			echo $info_color"INFO"$no_color": UPLOADING LICENSE FILE"
+	        docker cp $rp_license_file $rp_container_name_prefix$i:/opt/rp_license.txt
 
+            echo $info_color"INFO"$no_color": Initializing the cluster with node#"$i
+            docker exec -d --privileged $rp_container_name_prefix$i "/opt/redislabs/bin/rladmin" cluster create name $rp_fqdn username $rp_admin_account_name password $rp_admin_account_password flash_enabled license_file /opt/rp_license.txt
+        else
+            echo $info_color"INFO"$no_color": Initializing the cluster with node#"$i
+            docker exec -d --privileged $rp_container_name_prefix$i "/opt/redislabs/bin/rladmin" cluster create name $rp_fqdn username $rp_admin_account_name password $rp_admin_account_password flash_enabled 
+		fi
+
+        #get first node ip
         cmd="docker exec -it $rp_container_name_prefix$i ifconfig | grep 10.0.0. | cut -d\":\" -f 2 | cut -d\" \" -f 1"
         rp_first_node_ip=$(eval $cmd)
+
     else
         #added nodes
         rp_admin_ui_port_mapped=$(( $rp_admin_ui_port+$i-1 ))
@@ -81,8 +93,16 @@ sleep 30
 for ((i = 0; i<=$rp_total_dbs; i++))
 do
     echo $info_color"INFO"$no_color": Creating database "$rp_database_name_prefix$i" on port "$(($rp_database_port_prefix+$i))
-    curl -k -u "$rp_admin_account_name:$rp_admin_account_password" --request POST --url "https://localhost:$rp_admin_restapi_port/v1/bdbs" --header 'content-type: application/json' --data '{"name":"$rp_database_name_prefix$i","type":"redis","memory_size":1073741824,"port":$(($rp_database_port_prefix+$i))}'
+    curl -k -u "$rp_admin_account_name:$rp_admin_account_password" --request POST --url "https://localhost:$rp_admin_restapi_port/v1/bdbs" --header 'content-type: application/json' --data '{"name":"'$rp_database_name_prefix$i'","type":"redis","memory_size":102400,"port":'$(($rp_database_port_prefix+$i))'}'
     sleep 5
+done
+
+#populate sample data
+sleep 30
+for ((i = 0; i<=$rp_total_dbs; i++))
+do
+    echo $info_color"INFO"$no_color": Populating database "$rp_database_name_prefix$i" on port "$(($rp_database_port_prefix+$i))
+    docker exec $rp_container_name_prefix"0" /opt/redislabs/bin/redis-cli -p $(($rp_database_port_prefix+$i)) mset k1 1 k2 2 k3 3 k4 4 k5 5
 done
 
 
