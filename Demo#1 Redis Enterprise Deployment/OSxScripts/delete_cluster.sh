@@ -38,7 +38,7 @@ then
     echo $info_color"INFO"$no_color": Running cleanup..."
 
     i=0
-    for ((i = 1; i<=$rp_total_nodes; i++))
+    for ((i = 0; i<$rp_total_nodes; i++))
     do
         echo $info_color"INFO"$no_color": Deleting containers rp"$i
         docker rm -f rp$i 

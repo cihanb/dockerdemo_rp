@@ -45,7 +45,11 @@ rp_network_name="redis_net"
 #start admin UI and rest API ports from 8443 and 9443 and +1 per node
 rp_admin_ui_port=8443
 rp_admin_restapi_port=9443
-rp_database_post=12000
+#database config
+rp_total_dbs=100
+rp_database_port_prefix=12000
+rp_database_name_prefix="db"
+
 
 
 #misc settings

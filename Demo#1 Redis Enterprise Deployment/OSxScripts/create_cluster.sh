@@ -28,7 +28,7 @@
 #read settings
 source ../settings.sh
 
-#create
+#create network 
 echo ""
 echo $info_color"INFO"$no_color": Starting Redis Enterprise Pack containers on a single network"
 
@@ -36,15 +36,15 @@ echo ""
 echo $info_color"INFO"$no_color": Creating network "$rp_network_name
 docker network create --ip-range 10.0.0.0/16 --subnet=10.0.0.0/16 $rp_network_name
 
-i=0
-for ((i = 1; i<=$rp_total_nodes; i++))
+#create cluster
+for ((i = 0; i<$rp_total_nodes; i++))
 do
-    if [ $i -eq 1 ]
+    if [ $i -eq 0 ]
     then 
-        
+        #first node
         echo ""
         echo $info_color"INFO"$no_color": Starting container for node#"$i
-        docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource --network $rp_network_name --name $rp_container_name_prefix$i -p $rp_admin_ui_port:$rp_admin_ui_port -p $rp_admin_restapi_port:$rp_admin_restapi_port -p $rp_database_post:$rp_database_post $rp_container_tag
+        docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource --network $rp_network_name --name $rp_container_name_prefix$i -p $rp_admin_ui_port:$rp_admin_ui_port -p $rp_admin_restapi_port:$rp_admin_restapi_port -p $rp_database_port_prefix:$rp_database_port_prefix $rp_container_tag
 
         #wait for the container to launch and redis enterprise to start
         echo $info_color"INFO"$no_color": Waiting for containers to launch and services to start"
@@ -78,8 +78,13 @@ do
 
 #create database
 sleep 30
-echo $info_color"INFO"$no_color": Creating database sample-db on port 12000"
-curl -k -u "$rp_admin_account_name:$rp_admin_account_password" --request POST --url "https://localhost:$rp_admin_restapi_port/v1/bdbs" --header 'content-type: application/json' --data '{"name":"sample-db","type":"redis","memory_size":1073741824,"port":12000}'
+for ((i = 0; i<=$rp_total_dbs; i++))
+do
+    echo $info_color"INFO"$no_color": Creating database "$rp_database_name_prefix$i" on port "$(($rp_database_port_prefix+$i))
+    curl -k -u "$rp_admin_account_name:$rp_admin_account_password" --request POST --url "https://localhost:$rp_admin_restapi_port/v1/bdbs" --header 'content-type: application/json' --data '{"name":"$rp_database_name_prefix$i","type":"redis","memory_size":1073741824,"port":$(($rp_database_port_prefix+$i))}'
+    sleep 5
+done
+
 
 echo ""
 echo $info_color"INFO"$no_color": "$rp_total_nodes" node Redis Enterprise Pack cluster created."
