@@ -48,7 +48,7 @@ rp_network_name="redis_net"
 rp_admin_ui_port=8443
 rp_admin_restapi_port=9443
 #database config
-rp_total_dbs=100
+rp_total_dbs=1
 rp_database_port_prefix=12000
 rp_database_name_prefix="db"
 
