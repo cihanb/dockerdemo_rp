@@ -28,7 +28,7 @@
 ##rp settings
 rp_container_tag="redislabs/redis:latest"
 #total number of nodes to set up
-rp_total_nodes=1
+rp_total_nodes=3
 #container ame prefix - each node get a number added based on nodecount
 rp_container_name_prefix="rp"
 #container resources

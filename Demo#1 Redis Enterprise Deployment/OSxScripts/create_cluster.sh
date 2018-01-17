@@ -90,7 +90,7 @@ do
 
 #create database
 sleep 30
-for ((i = 0; i<=$rp_total_dbs; i++))
+for ((i = 0; i<$rp_total_dbs; i++))
 do
     echo $info_color"INFO"$no_color": Creating database "$rp_database_name_prefix$i" on port "$(($rp_database_port_prefix+$i))
     curl -k -u "$rp_admin_account_name:$rp_admin_account_password" --request POST --url "https://localhost:$rp_admin_restapi_port/v1/bdbs" --header 'content-type: application/json' --data '{"name":"'$rp_database_name_prefix$i'","type":"redis","memory_size":102400,"port":'$(($rp_database_port_prefix+$i))'}'
@@ -99,7 +99,7 @@ done
 
 #populate sample data
 sleep 30
-for ((i = 0; i<=$rp_total_dbs; i++))
+for ((i = 0; i<$rp_total_dbs; i++))
 do
     echo $info_color"INFO"$no_color": Populating database "$rp_database_name_prefix$i" on port "$(($rp_database_port_prefix+$i))
     docker exec $rp_container_name_prefix"0" /opt/redislabs/bin/redis-cli -p $(($rp_database_port_prefix+$i)) mset k1 1 k2 2 k3 3 k4 4 k5 5
