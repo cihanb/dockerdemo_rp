@@ -74,7 +74,7 @@ do
 
         echo ""
         echo $info_color"INFO"$no_color": Starting container for node#"$i
-        docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource --network $rp_network_name --name $rp_container_name_prefix$i -p $rp_admin_ui_port_mapped:$rp_admin_ui_port -p $rp_admin_restapi_port_mapped:$rp_admin_restapi_port $rp_container_tag
+        docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource --network $rp_network_name --name $rp_container_name_prefix$i $rp_container_tag
 
         
         # wait for cluster setup to finish
