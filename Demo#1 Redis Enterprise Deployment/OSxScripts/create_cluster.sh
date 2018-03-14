@@ -89,7 +89,7 @@ do
 # sudo ./rladmin tune cluster default_shards_placement sparse
 
 #create database
-sleep 30
+sleep 60
 for ((i = 0; i<$rp_total_dbs; i++))
 do
     echo $info_color"INFO"$no_color": Creating database "$rp_database_name_prefix$i" on port "$(($rp_database_port_prefix+$i))
