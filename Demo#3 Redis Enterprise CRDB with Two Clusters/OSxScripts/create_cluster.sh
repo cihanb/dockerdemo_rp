@@ -43,7 +43,7 @@ do
     then 
         
         echo ""
-        echo $info_color"INFO"$no_color": Starting container for node#"$i
+        echo $info_color"INFO"$no_color": Starting container for Cluster#1 node#"$i
         docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource -h $rp1_container_name_prefix$i --network $rp_network_name --name $rp1_container_name_prefix$i -p $rp1_admin_ui_port:$rp_admin_ui_port -p $rp1_admin_restapi_port:$rp_admin_restapi_port -p $rp1_database_port:$rp_database_port -p 8080:8080 $rp_container_tag
 
         #wait for the container to launch and redis enterprise to start
@@ -61,7 +61,7 @@ do
         rp_admin_restapi_port_mapped=$(( $rp_admin_restapi_port+$i-1 ))
 
         echo ""
-        echo $info_color"INFO"$no_color": Starting container for node#"$i
+        echo $info_color"INFO"$no_color": Starting container for Cluster#1 node#"$i
         docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource -h $rp1_container_name_prefix$i.$rp1_fqdn --network $rp_network_name --name $rp1_container_name_prefix$i -p $rp1_admin_ui_port_mapped:$rp_admin_ui_port -p $rp1_admin_restapi_port_mapped:$rp_admin_restapi_port $rp_container_tag
 
         
@@ -79,7 +79,7 @@ do
     then 
         
         echo ""
-        echo $info_color"INFO"$no_color": Starting container for node#"$i
+        echo $info_color"INFO"$no_color": Starting container for Cluster#2 node#"$i
         docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource -h $rp2_container_name_prefix$i --network $rp_network_name --name $rp2_container_name_prefix$i -p $rp2_admin_ui_port:$rp_admin_ui_port -p $rp2_admin_restapi_port:$rp_admin_restapi_port -p $rp2_database_port:$rp_database_port $rp_container_tag
 
         #wait for the container to launch and redis enterprise to start
@@ -97,7 +97,7 @@ do
         rp_admin_restapi_port_mapped=$(( $rp_admin_restapi_port+$i-1 ))
 
         echo ""
-        echo $info_color"INFO"$no_color": Starting container for node#"$i
+        echo $info_color"INFO"$no_color": Starting container for Cluster#2 node#"$i
         docker run -d --cpus $rp_container_cpus -m $rp_container_ram --cap-add sys_resource -h $rp2_container_name_prefix$i --network $rp_network_name --name $rp2_container_name_prefix$i -p $rp2_admin_ui_port_mapped:$rp_admin_ui_port -p $rp2_admin_restapi_port_mapped:$rp_admin_restapi_port $rp_container_tag
 
         
@@ -114,7 +114,7 @@ do
 # sudo ./rladmin tune cluster default_shards_placement sparse
 
 #create database
-sleep 30
+sleep 75
 echo ""
 echo $info_color"INFO"$no_color": Creating database sample-crdb on port 12000"
 # json_dboptions='{"default_db_config": {"name": "sample-crdb", "bigstore": false, "data_persistence": "disabled", "replication": true, "memory_size": 1024000, "shards_count": 1, "port": 12000}, "instances": [{"cluster": {"url": "http://'$rp1_fqdn':8080", "credentials": {"username": "'$rp_admin_account_name'", "password": "'$rp_admin_account_password'"}, "name": "'$rp1_fqdn'"}, "compression": 6}, {"cluster": {"url": "http://'$rp2_fqdn':8080", "credentials": {"username": "'$rp_admin_account_name'", "password": "'$rp_admin_account_password'"}, "name": "'$rp2_fqdn'"}, "compression": 6}], "name": "sample-crdb"}'
