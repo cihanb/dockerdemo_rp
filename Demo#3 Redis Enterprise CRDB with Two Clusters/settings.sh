@@ -26,7 +26,7 @@
 # Author: Cihan Biyikoglu - github:(cihanb)
 
 ##rp settings
-rp_container_tag="redislabs/redis:latest"
+rp_container_tag="redislabs/redis-internal:100.0.2-1238.xenial"
 #total number of nodes to set up
 rp1_total_nodes=1
 rp2_total_nodes=1
